@@ -1,0 +1,14 @@
+<h1>Support Request Details</h1>
+<hr>
+<h3>Name:  <%= @support_request.name %></h3>
+
+<p>Email:  <%= @support_request.email %> </p>
+	
+<p>Department:  <%= @support_request.department %></p>
+
+<p>Message:  <%= @support_request.message %></p>
+
+<p>Status:  <%= @support_request.done ? "Done" : "Not Done" %> </p>
+		
+<%= link_to "Edit", edit_support_request_path(@support_request), class: "btn btn-info" %>
+<%= link_to "Delete", support_request_path(@support_request), method: :delete, data: {confirm: "Are you sure you want to delete this support request?"}, class: "btn btn-danger"%>

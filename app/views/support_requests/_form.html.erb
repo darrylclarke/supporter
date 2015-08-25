@@ -1,0 +1,96 @@
+<% if @support_request.errors.any? %>
+	<ul>
+		<% @support_request.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+	</ul>
+<% end %>
+
+<%= form_for @support_request, html: {class: "form-horizontal"} do |sr| %>
+	<table class="table table-bordered table-condensed" >
+		<thead>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="width : 150px;">
+	<!--<div class="form-group">-->
+		<%= sr.label :name %>
+			</td><td>
+		<%= sr.text_field :name, class: "form-control"%>
+			</td>
+			</tr>
+	<!--</div>-->
+	
+	<!--<div class="form-group">-->
+			<tr>
+				<td>
+		<%= sr.label :email %>
+			</td><td>
+		<%= sr.email_field :email, class: "form-control" %>
+			</td>
+			</tr>
+	<!--</div>-->
+
+	<!--
+	<div class="form-group">
+		<%#= sr.label :department %>
+	</div>
+	-->
+	<% def is( str ) 
+	      if str == 'sales' && @support_request.department == 'sales'
+		  	return true
+		  elsif str == 'marketing' && @support_request.department == 'marketing'
+		    return true
+		  elsif str == 'technical' && @support_request.department == 'technical'
+		    return true
+		  end
+		  nil
+	   end %>
+	<!--<div class="form-group">-->
+			<tr>
+				<td class="details-header-column">
+		<%= sr.label :department%>		
+			</td><td>
+		<%#= sr.text_field :department,  class: "form-control" %>
+		<%= radio_button_tag(:department, "sales", is( 'sales') ) %>
+		<%= label_tag(:department_sales, "Sales") %>
+		<%= radio_button_tag(:department, "marketing", is('marketing') ) %>
+		<%= label_tag(:department_marketing, "Marketing") %>
+		<%= radio_button_tag(:department, "technical", is('technical') ) %>
+		<%= label_tag(:department_technical, "Technical") %>
+			</td>
+			</tr>
+	<!--</div>-->
+	
+	<!--<div class="form-group">-->
+			<tr>
+				<td>
+		<%= sr.label :message %>
+			</td><td>
+		<%= sr.text_area :message,  class: "form-control" %>
+			</td>
+		</tr>
+
+	<!--</div>-->
+
+	<!--<div class="form-group">-->
+	<% if show_done %>
+		<tr>
+			<td>
+			<%= sr.label :done %>
+			</td><td>
+			<%= sr.check_box :done %>
+			</td>
+		</tr>
+	<% end %>
+	<!--</div>-->
+		
+	<!--<div class = "form-group">	-->
+		<tr>
+			<td></td>
+			<td>
+	<%= sr.submit "#{show_done ? 'Update' : 'Save'}", class: "btn btn-primary btn-shadow" %>
+			</td>
+		</tr>
+	<!--</div>-->
+<% end %>

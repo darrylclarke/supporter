@@ -1,0 +1,40 @@
+<h1>All Projects</h1>
+<div style="text-align:right">
+    <form action="/search" method="GET">
+        <input type="text" name="search_for" value="<%= SupportRequest::get_search_string %>">
+        <!--<input type="text" name="search_for" value="">-->
+        <input type="submit" value="Search">    
+    <form>
+</div>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Department</td>
+            <td>Message</td>
+            <td>Actins</td>
+        </tr>
+    </thead>
+    <tbody>
+        
+<% if @support_requests %>
+    <% @support_requests.each do |s| %>
+        <tr class="table-striped">   
+            <td> <%= s.name       %> </td>
+            <td> <a href="mailto:<%= s.email %>?Subject=Hello,%20<%= s.name.split(' ')[0] %>,%20why%20is%20your%20project%20late"><%= s.email %></a> </td>
+            <td> <%= s.department %> </td>
+            <td> <%= s.message    %> </td>
+            <td>
+        <%= link_to "Edit", edit_support_request_path(s), class: "btn btn-info" %>
+        <%= link_to "Delete", support_request_path(s), method: :delete, data: {confirm: "Are you sure you want to delete this support request?"}, class: "btn btn-danger"%>
+        <% if !s.done %>
+            <% msg = "Done" %>
+        <% else %>
+            <% msg = "Not Done" %>
+        <% end %>
+            <%= link_to msg, done_helper_path(s), class: "btn btn-info" %>
+            </td>
+        </tr>        
+    <% end %>
+<% end %>
